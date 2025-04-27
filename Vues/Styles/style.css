@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+:root {
+    --platinum: #eef0f2ff;
+    --powder-blue: #c6c7c4ff;
+    --moonstone: #58a4b0ff;
+    --charcoal: #353b3cff; 
+    --eerie-black: #1b1b1eff;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Rubik", 'Arial', sans-serif;
+}
+
+.waiting-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: var(--platinum);
+    font-family: "Rubik", 'Arial', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    color: var(--powder-blue);
+}
+
+.waiting-container .smiley {
+    font-size: 100px;
+    margin-bottom: 20px;
+}
+
+.seperator {
+    height: 100vh;
+    width: 1px;
+    border: 1px solid #000000;
+}
+
+.navigation_container {
+    color: var(--powder-blue);
+    background-color: var(--charcoal);
+}
+
+.username {
+    color: var(--powder-blue);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+.navigation_btn {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    height: 38px;
+    padding: 0 20px;
+    text-decoration: none;
+    color: var(--powder-blue);
+    font-weight: 400;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+}
+
+.navigation_btn:hover {
+    background-color: var(--moonstone);
+    color: var(--platinum);
+}
+
+.global_coloring {
+    background-color: var(--platinum);
+    color: var(--eerie-black);
+}
+
+.admin_page_container {
+    padding: 20px;
+    
+}
+
+.table-bs-props {
+    --bs-table-bg: transparent !important;
+    --bs-table-border-color: var(--eerie-black) !important;
+}
+
+.primary-btn-bs-props {
+    --bs-btn-bg: var(--moonstone);
+    --bs-btn-color: var(--platinum);
+}
+
+.table_holder {
+    padding: 4px;
+    border: 2px dashed var(--eerie-black);
+    border-radius: 5px;
+}
+
+.logout_btn {
+    color: var(--moonstone);
+}
