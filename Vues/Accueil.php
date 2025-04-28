@@ -1,15 +1,3 @@
-<!-- 
- - Type du PC 
-- Marque  
-- Modèle 
-- N° série 
-- Date de dépôt pour réparation 
-- date fin prévue  
-- date fin Réelle,  
-- panne,  
-- cout,  
-- statut 
- -->
 <?php 
 error_reporting(E_ALL);
 ini_set('display_errors', '1');

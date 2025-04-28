@@ -1,20 +1,4 @@
 <?php
-/*- Type du PC 
-- Marque  
-- Modèle 
-- N° série 
-- Date de dépôt pour réparation 
-- date fin prévue  
-- panne,  
-- cout,  
-
-- Action Technicien : cette colonne affiche l’une des possibilités suivantes :  
-▪ Lancer  réparation  : Lien hypertexte affiché lorsque l’état de la réparation  est 
-« en attente » et permet de changer l’état à « en reparation » , d’insérer la date 
-de début de réparation dans la table Reparation , et de réafficher la page. 
-▪ Finaliser réparation: Lien hypertexte affiché lorsque l’état de la réparation est 
-« en reparation » et permet d’afficher la page finaliserReparation  */
-
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
