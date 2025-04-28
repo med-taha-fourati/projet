@@ -46,5 +46,13 @@ class UtilisateurController {
         }
         return $techniciens;
     }
+
+    public static function ListeTechniciensById($technicien_id) {
+        $technicien = UtilisateurDAO::FindById($technicien_id);
+        if ($technicien && UtilisateurDAO::FetchRoleById($technicien->id) == Technicien::$code) {
+            return $technicien;
+        }
+        return null;
+    }
 }
 ?>

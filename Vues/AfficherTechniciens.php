@@ -70,6 +70,6 @@ $reparations_tout = UtilisateurController::ListeTechniciens();
         }
         ?>
     </table>
-    <a href="../Vues/AjouterTechnicien.php">Ajouter un technicien?</a>
+    <a class="btn btn-link" href="../Vues/AjouterTechnicien.php">Ajouter un technicien?</a>
 </body>
 </html>

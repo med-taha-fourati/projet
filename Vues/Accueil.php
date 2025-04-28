@@ -69,13 +69,13 @@ $appareils = UtilisateurController::ListeReparationsByClient($client); //Apparei
                     <td><?php echo $appareil->cout; ?>dt</td>
                     <td><?php switch ($appareil->statut) {
                         case 0:
-                            echo "En attente";
+                            echo "<span style='color:var(--btn-danger);'>En attente</span>";
                             break;
                         case 1:
-                            echo "En reparation";
+                            echo "<span style='color:var(--btn-warning);'>En reparation</span>";
                             break;
                         case 2:
-                            echo "Terminé";
+                            echo "<span style='color:var(--btn-success);'>Terminé</span>";
                             break;
                     } ?></td>
                 </tr>

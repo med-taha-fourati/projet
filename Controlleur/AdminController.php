@@ -162,6 +162,130 @@ if (isset($_POST['modifier_rep'])) {
             echo "Action non reconnue.";
             break;
     }
-    
+}
+
+// control admin technicien
+if (isset($_POST['action_admin_tech'])) {
+    $action = $_POST['action_admin_tech'];
+    $technicien_id = $_POST['rep_id'];
+
+    switch ($action) {
+        case 'Supprimer':
+            UtilisateurDAO::SupprimerUtilisateur($technicien_id);
+            header('Location: ../Vues/AfficherTechniciens.php');
+            break;
+        case 'Modifier':
+            header('Location: ../Vues/ModifierTechnicien.php?technicien_id=' . $technicien_id);
+            break;
+        default:
+            echo "Action non reconnue.";
+            break;
+    }
+}
+
+// modifier technicien
+if (isset($_POST['modifier_technicien_admin'])) {
+    $technicien_id = $_POST['technicien_id'];
+    $login = $_POST['login'];
+    $password = $_POST['password'];
+    $nom = $_POST['nom'];
+    $email = $_POST['email'];
+    $adresse = $_POST['adresse'];
+    $tel = $_POST['tel'];
+
+    UtilisateurDAO::ModifierUtilisateur($technicien_id, 
+                                        $login, 
+                                        $password, 
+                                        $nom, 
+                                        $email, 
+                                        $adresse, 
+                                        $tel);
+    header('Location: ../Vues/AfficherTechniciens.php');
+}
+
+// ajouter technicien
+if (isset($_POST['ajouter_technicien_admin'])) {
+    if (isset($_POST['exist_select']) && $_POST['exist_select'] == 'existant') {
+        $client_id = $_POST['client'];
+        $client = UtilisateurDAO::FindById($client_id);
+        UtilisateurDAO::ModifierUtilisateur($client->id, 
+                                            $client->login,
+                                            $client->password,
+                                            $client->nom,
+                                            $client->email,
+                                            $client->adresse,
+                                            $client->tel,
+                                            Technicien::$code);
+        header('Location: ../Vues/AfficherTechniciens.php');
+    } else {
+        $login = $_POST['login'];
+        $password = $_POST['password'];
+        $nom = $_POST['nom'];
+        $email = $_POST['email'];
+        $adresse = $_POST['adresse'];
+        $tel = $_POST['tel'];
+
+        UtilisateurDAO::AjouterUtilisateur($login, $password, $nom, $email, $adresse, $tel, Technicien::$code);
+        header('Location: ../Vues/AfficherTechniciens.php');
+    }
+}
+
+// retrogarder technicien
+if (isset($_POST['derank_technicien'])) {
+    $technicien_id = $_POST['technicien_id'];
+    $technicien = UtilisateurDAO::FindById($technicien_id);
+    UtilisateurDAO::ModifierUtilisateur($technicien->id, 
+                                        $technicien->login,
+                                        $technicien->password,
+                                        $technicien->nom,
+                                        $technicien->email,
+                                        $technicien->adresse,
+                                        $technicien->tel,
+                                        Client::$code);
+    header('Location: ../Vues/AfficherTechniciens.php');
+}
+
+// controle appareil admin
+if (isset($_POST['action_admin_app'])) {
+    $action = $_POST['action_admin_app'];
+    $appareil_id = $_POST['rep_id'];
+
+    switch ($action) {
+        case 'Supprimer':
+            AppareilDAO::SupprimerAppareil($appareil_id);
+            header('Location: ../Vues/AfficherAppareils.php');
+            break;
+        case 'Modifier':
+            header('Location: ../Vues/ModifierAppareil.php?appareil_id=' . $appareil_id);
+            break;
+        default:
+            echo "Action non reconnue.";
+            break;
+    }
+}
+
+// modifier appareil
+if (isset($_POST['modifier_appareil_admin'])) {
+    $appareil_id = $_POST['appareil_id'];
+    $type = $_POST['type'];
+    $marque = $_POST['marque'];
+    $modele = $_POST['modele'];
+    $numSerie = $_POST['numSerie'];
+    $client_id = $_POST['client'];
+
+    AppareilDAO::ModifierAppareil($appareil_id, $type, $marque, $modele, $numSerie, $client_id);
+    header('Location: ../Vues/AfficherAppareils.php');
+}
+
+// ajouter appareil
+if (isset($_POST['ajouter_appareil_admin'])) {
+    $type = $_POST['type'];
+    $marque = $_POST['marque'];
+    $modele = $_POST['modele'];
+    $numSerie = $_POST['numSerie'];
+    $client_id = $_POST['client'];
+
+    AppareilDAO::AjouterAppareil($type, $marque, $modele, $numSerie, $client_id);
+    header('Location: ../Vues/AfficherAppareils.php');
 }
 ?>

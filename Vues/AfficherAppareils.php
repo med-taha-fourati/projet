@@ -58,8 +58,8 @@ $reparations_tout = AppareilController::ListeToutesAppareils();
                         <td><?php echo $appareil->numSerie; ?></td>
                         <td><?php echo $appareil->client->login; ?></td>
                         <td>
-                            <input type="submit" name="action_admin_tech" class="btn btn-outline-danger" value="Supprimer"> <!-- supprimer -->
-                            <input type="submit" name="action_admin_tech" class="btn btn-outline-primary" value="Modifier">
+                            <input type="submit" name="action_admin_app" class="btn btn-outline-danger" value="Supprimer"> <!-- supprimer -->
+                            <input type="submit" name="action_admin_app" class="btn btn-outline-primary" value="Modifier">
                         </td>
                     </form>
                 </tr>
@@ -68,6 +68,6 @@ $reparations_tout = AppareilController::ListeToutesAppareils();
         }
         ?>
     </table>
-    <a href="../Vues/AjouterAppareil.php">Ajouter un appareil?</a>
+    <a class="btn btn-link" href="../Vues/AjouterAppareil.php">Ajouter un appareil?</a>
 </body>
 </html>

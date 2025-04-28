@@ -1,6 +1,7 @@
 <?php
 require_once '../DAO/AppareilDAO.php';
 require_once '../Metier/Appareil.php';
+require_once '../Controlleur/UtilisateurController.php';
 
 class AppareilController {
     public static function ListeAppareilsByClient($client_id) {
@@ -29,5 +30,19 @@ class AppareilController {
             exit;
         }
     }
+
+    public static function ListeAppareilById($appareil_id) {
+        try {
+            $appareil = AppareilDAO::FindById($appareil_id);
+            if ($appareil) {
+                return $appareil;
+            } else {
+                echo "Appareil non trouvé.";
+            }
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+            exit;
+        }
+    } 
 }
  ?>

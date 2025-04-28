@@ -24,6 +24,8 @@ if (UtilisateurDAO::FetchRoleById($client) != Admin::$code) {
 $clients = UtilisateurController::ListeClients();
 
 //NOTE - you would be getting the technicien id from the get method
+$technicien_id = $_GET['technicien_id'];
+$technicien = UtilisateurController::ListeTechniciensById($technicien_id);
 //TODO - add element that lets you derank the technicien to a client
 ?>
 
@@ -38,26 +40,33 @@ $clients = UtilisateurController::ListeClients();
 </head>
 <body class="admin_page_container global_coloring">
     <h1>Modifier Technicien</h1>
-    
-    <form action="../Controlleur/UtilisateurController.php" method="post">
+    <fieldset>
+        <legend>Retrogarder le technicien</legend>
+        <form action="../Controlleur/AdminController.php" method="post">
+            <input type="hidden" name="technicien_id" value="<?php echo $technicien->id; ?>">
+            <input type="submit" value="Rétrograder le technicien en client" name="derank_technicien" class="btn btn-warning">
+        </form>
+    </fieldset>
+    <hr>
+    <form action="../Controlleur/AdminController.php" method="post">
+        <input type="hidden" name="technicien_id" value="<?php echo $technicien->id; ?>">
         <fieldset>
             <legend>Formulaire de modification</legend>
                 <label for="login">Login:</label>
-                <input type="text" name="login" id="login" class="form-control" required>
+                <input type="text" name="login" id="login" value="<?php echo $technicien->login ?>" class="form-control" required>
                 <label for="password">Password:</label>
-                <input type="password" name="password" id="password" class="form-control" required>
+                <input type="password" name="password" id="password" value="<?php echo $technicien->password ?>" class="form-control" required>
                 <label for="nom">Nom:</label>
-                <input type="text" name="nom" id="nom" class="form-control" required>
+                <input type="text" name="nom" id="nom" value="<?php echo $technicien->nom ?>"class="form-control" required>
                 <label for="email">Email:</label>
-                <input type="email" name="email" id="email" class="form-control">
+                <input type="email" name="email" id="email" value="<?php echo $technicien->email ?>" class="form-control">
                 <label for="adresse">Adresse:</label>
-                <input type="text" name="adresse" id="adresse" class="form-control">
+                <input type="text" name="adresse" id="adresse" value="<?php echo $technicien->adresse ?>" class="form-control">
                 <label for="tel">Tel:</label>
-                <input type="tel" name="tel" id="tel" class="form-control">
+                <input type="tel" name="tel" id="tel" value="<?php echo $technicien->tel; ?>" class="form-control">
         </fieldset>
-    
     <hr>
-    <input type="submit" value="Modifier" name="modifier_technicien_admin" class="primary-btn-bs-props">
+    <input type="submit" value="Modifier" name="modifier_technicien_admin" class="btn btn-primary primary-btn-bs-props">
     </form>
 </body>
 </html>

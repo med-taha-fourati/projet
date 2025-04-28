@@ -72,7 +72,7 @@ switch (UtilisateurDAO::FetchRoleById($client)) {
         <?php foreach ($liste_actuelle as $nom => $lien){ ?>
             <li class="navigation_item_container"><a href="<?php echo $lien[0]; ?>" class="navigation_btn" target="destination-page"><i class="<?php echo $lien[1];?>"></i>&nbsp;&nbsp;&nbsp;<?php echo $nom; ?></a></li>
         <?php } ?>
-        <li><a href="../Controlleur/AuthController.php" class="navigation_btn"><i class="fas fa-power-off"></i>&nbsp;&nbsp;&nbsp;Deconnexion</a></li>
+        <li><a href="../Controlleur/AuthController.php?logout=true" class="navigation_btn" target="_top"><i class="fas fa-power-off"></i>&nbsp;&nbsp;&nbsp;Deconnexion</a></li>
     </ul>
 </body>
 </html>

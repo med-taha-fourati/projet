@@ -121,7 +121,7 @@ $clients = UtilisateurController::ListeClients();
         </fieldset>
         <hr>
         <input type="submit" class="btn btn-primary" name="modifier_rep" value="Modifier">
-        <a href="../Vues/AjouterReparationAdmin.php">Ajouter une nouvelle reparation?</a>
+        <a class="btn btn-link" href="../Vues/AjouterReparationAdmin.php">Ajouter une nouvelle reparation?</a>
     </form>
 </body>
 </html>

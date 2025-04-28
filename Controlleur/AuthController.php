@@ -1,6 +1,15 @@
 <?php
 require_once '../DAO/UtilisateurDAO.php';
-    
+
+if ($_GET) {
+    $action = $_GET['logout'];
+    if ($action == true) {
+        session_start();
+        session_destroy();
+        header('Location: ../Vues/Authentification.php');
+        exit();
+    }
+}
 if (isset($_POST['inscription'])) {
         $login = $_POST['login'];
         $password = $_POST['password'];
@@ -45,7 +54,7 @@ if (isset($_POST['login_btn'])) {
                 session_start();
                 $_SESSION['client'] = $utilisateur->id;
                 $_SESSION['login'] = $login;
-                header('Location: ../Vues/index.html');
+                header('Location: ../Vues/index.php');
                 // switch (get_class($utilisateur)) {
                 //     case 'Client':
                 //         header('Location: ../Vues/Accueil.php');

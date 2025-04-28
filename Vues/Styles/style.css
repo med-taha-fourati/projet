@@ -6,8 +6,16 @@
     --moonstone: #58a4b0ff;
     --charcoal: #353b3cff; 
     --eerie-black: #1b1b1eff;
-}
 
+    /* button color themes */
+    --btn-primary: #58a4b0ff;
+    --btn-warning: #B07F58ff;
+    --btn-danger: #5B534Cff;
+    --btn-success: rgb(101, 133, 112);
+    --btn-light: #eef0f2ff;
+    --btn-dark: #353b3cff;
+    --btn-link: #58a4b0ff;
+}   
 
 * {
     margin: 0;
@@ -99,4 +107,83 @@
 
 .logout_btn {
     color: var(--moonstone);
+}
+
+/* bootstrap definitions */
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+    background-color: var(--btn-primary) !important;
+    border-color: var(--btn-primary) !important;
+    color: var(--platinum) !important;
+}
+
+.btn-link, .btn-link:hover, .btn-link:active, .btn-link:visited {
+    background-color: transparent !important;
+    border-color: transparent !important;
+    color: var(--btn-link) !important;
+}
+
+.btn-warning, .btn-warning:hover, .btn-warning:active, .btn-warning:visited {
+    background-color: var(--btn-warning) !important;
+    border-color: var(--btn-warning) !important;
+    color: var(--platinum) !important;
+}
+
+.btn-danger, .btn-danger:hover, .btn-danger:active, .btn-danger:visited {
+    background-color: var(--btn-danger) !important;
+    border-color: var(--btn-danger) !important;
+    color: var(--platinum) !important;
+}
+
+.btn-success, .btn-success:hover, .btn-success:active, .btn-success:visited {
+    background-color: var(--btn-success) !important;
+    border-color: var(--btn-success) !important;
+    color: var(--platinum) !important;
+}
+
+.btn-outline-primary {
+    background-color: transparent !important;
+    border-color: var(--btn-primary) !important;
+    color: var(--btn-primary) !important;
+}
+
+.btn-outline-primary:hover, .btn-outline-primary:active, .btn-outline-primary:visited {
+    background-color: var(--btn-primary) !important;
+    border-color: var(--btn-primary) !important;
+    color: var(--platinum) !important;
+}
+
+.btn-outline-warning {
+    background-color: transparent !important;
+    border-color: var(--btn-warning) !important;
+    color: var(--btn-warning) !important;
+}
+
+.btn-outline-warning:hover, .btn-outline-warning:active, .btn-outline-warning:visited {
+    background-color: var(--btn-warning) !important;
+    border-color: var(--btn-warning) !important;
+    color: var(--platinum) !important;
+}
+
+.btn-outline-danger {
+    background-color: transparent !important;
+    border-color: var(--btn-danger) !important;
+    color: var(--btn-danger) !important;
+}
+
+.btn-outline-danger:hover, .btn-outline-danger:active, .btn-outline-danger:visited {
+    background-color: var(--btn-danger) !important;
+    border-color: var(--btn-danger) !important;
+    color: var(--platinum) !important;
+}
+
+.btn-outline-success {
+    background-color: transparent !important;
+    border-color: var(--btn-success) !important;
+    color: var(--btn-success) !important;
+}
+
+.btn-outline-success:hover, .btn-outline-success:active, .btn-outline-success:visited {
+    background-color: var(--btn-success) !important;
+    border-color: var(--btn-success) !important;
+    color: var(--platinum) !important;
 }

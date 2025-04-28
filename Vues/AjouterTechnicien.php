@@ -48,7 +48,7 @@ $clients = UtilisateurController::ListeClients();
     </div>
     </fieldset>
     <br><br>
-    <form action="../Controlleur/UtilisateurController.php" method="post">
+    <form action="../Controlleur/AdminController.php" method="post">
         <div class="existant" style="display: none;">
             <label for="client">Client:</label>
             <select name="client" id="client" class="form-select">
