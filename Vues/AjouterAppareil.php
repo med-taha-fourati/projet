@@ -35,7 +35,7 @@ $clients = UtilisateurController::ListeClients();
 </head>
 <body class="admin_page_container global_coloring">
     <h1>Ajouter une nouvelle appareil</h1>
-    <br><br>
+    <hr>
     <form action="../Controlleur/AdminController.php" method="post">
         <fieldset>
             <legend>Formulaire de creation</legend>
@@ -56,7 +56,7 @@ $clients = UtilisateurController::ListeClients();
         </fieldset>
     
     <hr>
-    <input type="submit" value="Ajouter" name="ajouter_appareil_admin" class="primary-btn-bs-props">
+    <input type="submit" value="Ajouter" name="ajouter_appareil_admin" class="btn btn-primary">
     </form>
 </body>
 </html>

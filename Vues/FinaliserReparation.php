@@ -33,12 +33,6 @@ if ($reparation->statut != 1) {
     echo "Erreur: Pas en reparation";
     exit;
 }
-/* SECTION - 
-offre  un  formulaire  permettant  de  mettre  à  jour :  la  date  de  fin  de 
-réparation (postérieur à la date début de  réparation), la panne, et le  coût de réparation. Le 
-bouton « valider » permet d’enregistrer les informations dans la table Réparation dans la base 
-de données avec l’état « Termine » et retourner à la page InterfaceTechnicien.
-*/
 ?>
 
 <!DOCTYPE html>
@@ -48,21 +42,24 @@ de données avec l’état « Termine » et retourner à la page InterfaceTechni
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Finaliser la reparation</title>
     <link rel="stylesheet" href="./Styles/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
 </head>
-<body>
+<body class="admin_page_container global_coloring">
     <h1>Finaliser la reparation pour <?php echo $reparation->appareil->marque; ?></h1>
-    <form action="" method="post">
+    <form action="../Controlleur/ReparationController.php" method="post">
         <label for="dateFinReelle">Date de fin réelle:</label>
-        <input type="date" id="dateFinReelle" name="dateFinReelle" required><br><br>
+        <input type="date" id="dateFinReelle" class="form-control" name="dateFinReelle" required>
 
         <label for="cout">Coût:</label>
-        <input type="number" id="cout" name="cout" min="0" required><br><br>
+        <input type="number" id="cout" class="form-control" name="cout" min="0" required>
 
         <label for="panne">Panne:</label>
-        <input type="text" id="panne" name="panne" required><br><br>
+        <input type="text" id="panne" class="form-control" name="panne" required>
 
         <input type="hidden" name="rep_id" value="<?php echo $reparation->id; ?>">
-        <input type="submit" name="fin_rep" value="Valider">
+        
+        <hr>
+        <input type="submit" class="btn btn-primary" name="fin_rep" value="Valider">
     </form>
 </body>
 </html>

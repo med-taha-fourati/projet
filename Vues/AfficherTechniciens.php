@@ -34,7 +34,9 @@ $reparations_tout = UtilisateurController::ListeTechniciens();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
 </head>
 <h1>Liste des techniciens</h1>
+<hr>
 <body class="admin_page_container global_coloring">
+<h5><?php echo sizeof($reparations_tout); ?> Techniciens</h5>
     <table class="table table-bs-props table-responsive">
         <tr>
             <th>Login</th>
@@ -70,6 +72,7 @@ $reparations_tout = UtilisateurController::ListeTechniciens();
         }
         ?>
     </table>
-    <a class="btn btn-link" href="../Vues/AjouterTechnicien.php">Ajouter un technicien?</a>
+    <a class="btn btn-primary" href="../Vues/AjouterTechnicien.php">Ajouter un technicien?</a>
+    
 </body>
 </html>

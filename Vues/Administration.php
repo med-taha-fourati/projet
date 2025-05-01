@@ -37,6 +37,7 @@ $reparations_tout = AdminController::ListeReparationsToutClients();
 <!-- style="text-align: center;" => debatable -->
 <h1>Liste des appareils a consulter pour admin <?php echo $_SESSION['login']; ?></h1>
 <body class="admin_page_container global_coloring">
+    <hr>
     <table class="table table-bs-props table-responsive">
         <tr>
             <th>Type</th>

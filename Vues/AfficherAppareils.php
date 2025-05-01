@@ -35,6 +35,8 @@ $reparations_tout = AppareilController::ListeToutesAppareils();
 </head>
 <h1>Liste des appareils</h1>
 <body class="admin_page_container global_coloring">
+    <hr>
+<h5><?php echo sizeof($reparations_tout); ?> appareils</h5>
     <table class="table table-bs-props table-responsive">
         <tr>
             <th>Type</th>
@@ -68,6 +70,6 @@ $reparations_tout = AppareilController::ListeToutesAppareils();
         }
         ?>
     </table>
-    <a class="btn btn-link" href="../Vues/AjouterAppareil.php">Ajouter un appareil?</a>
+    <a class="btn btn-primary" href="../Vues/AjouterAppareil.php">Ajouter un appareil?</a>
 </body>
 </html>
