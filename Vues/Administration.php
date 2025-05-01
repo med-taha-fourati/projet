@@ -25,6 +25,12 @@ if (UtilisateurDAO::FetchRoleById($client) != Admin::$code) {
 
 //TODO - a ajouter dans AdminController.php
 $reparations_tout = AdminController::ListeReparationsToutClients();
+if (isset($_GET['filter'])) {
+    $filter = $_GET['filter'];
+    $reparations_tout = array_filter($reparations_tout, function ($appareil) use ($filter) {
+        return stripos($appareil->technicien->login, $filter) !== false || stripos($appareil->technicien->nom, $filter) !== false;
+    });
+}
  //AppareilController::ListeAppareilsByClient($client);
 ?>
 <!DOCTYPE html>
@@ -43,6 +49,16 @@ $reparations_tout = AdminController::ListeReparationsToutClients();
     <h5><?php echo sizeof($reparations_tout); ?> reparations totales
     </h5>
     <hr>
+    <form action="Administration.php" method="get">
+        <div class="px-5 row">
+            <div class="col-9">
+                <input type="text" name="filter" class="form-control" value="<?php echo $filter ?? ''; ?>" placeholder="Rechercher par technicien">
+            </div>
+            <div class="col-3">
+                <button type="submit" class="btn btn-primary w-100">Rechercher</button>
+            </div>
+        </div>
+    </form>
     <style>
         .table-shadow {
             margin: 1rem 0;
