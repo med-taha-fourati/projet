@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+body {
+    margin: 0;
+    font-family: 'Rubik', Arial, sans-serif;
+    display: flex;
+    height: 100vh;
+}
+
+.the-whole-thing {
+    display: flex;
+    width: 100%;
+}
+
+.the-image {
+    flex: 1;
+    background-image: url('../assets/th.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.winder {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8)
+}
+
+.winder h1 {
+    color: #eef0f2ff;
+    font-size: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10rem;
+}
+
+.the-form {
+    flex: 0.5;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background-color: #eef0f2ff;
+    border-left: 7px solid #58a4b0ff;
+    box-shadow: -5px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.the-form input::-webkit-outer-spin-button,
+.the-form input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.the-form input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.the-form h1 {
+    margin-bottom: 20px;
+    font-size: 3rem;
+    color: #353b3cff;
+}
+
+.the-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: lighter;
+    color: #353b3cff;
+}
+
+.the-form input {
+    width: 25rem;
+    padding: 10px;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.the-form input:focus {
+    border-bottom: 3px solid #58a4b0ff;
+    outline: none;
+}
+
+.the-form input[type="reset"] {
+    margin-right: 10px;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    background-color: #5B534Cff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-family: 'Rubik', Arial, sans-serif;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.the-form input[type="submit"] {
+    margin-left: 10px;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    background-color: #58a4b0ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-family: 'Rubik', Arial, sans-serif;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.the-form input[type="reset"]:hover {
+    background-color: rgb(127, 117, 108);
+}
+.the-form input[type="submit"]:hover {
+    background-color: rgb(65, 119, 127);
+}
+
+.the-form a {
+    padding: 3rem;
+    color:#58a4b0ff;
+}
+
+.the-form .action-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
