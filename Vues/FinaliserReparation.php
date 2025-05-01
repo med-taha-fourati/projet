@@ -14,8 +14,8 @@ if (!isset($_SESSION['client'])) {
 $client = $_SESSION['client'];
 
 if (UtilisateurDAO::FetchRoleById($client) != Technicien::$code) {
-    echo "403: Vous n'avez pas le droit d'acceder a cette page";
-    exit;
+    include_once '../Connexion/Connection.php';
+    error_403();
 }
 
 if (!isset($_GET['id'])) {
