@@ -18,7 +18,9 @@ if (!isset($_SESSION['client'])) {
 $client = $_SESSION['client'];
 if (UtilisateurDAO::FetchRoleById($client) != Admin::$code) {
     include_once '../Connexion/Connection.php';
-    error_403();
+    header('HTTP/1.0 403 Forbidden');
+        $contents = file_get_contents('../Vues/assets/403.html');
+        exit($contents);
 }
 
 //TODO - a ajouter dans AdminController.php
@@ -38,7 +40,19 @@ $reparations_tout = AdminController::ListeReparationsToutClients();
 <h1>Liste des appareils a consulter pour admin <?php echo $_SESSION['login']; ?></h1>
 <body class="admin_page_container global_coloring">
     <hr>
-    <table class="table table-bs-props table-responsive">
+    <h5><?php echo sizeof($reparations_tout); ?> reparations totales
+    </h5>
+    <hr>
+    <style>
+        .table-shadow {
+            margin: 1rem 0;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+    </style>
+    <table class="table table-hover table-striped table-responsive table-shadow">
         <tr>
             <th>Type</th>
             <th>Marque</th>
@@ -54,7 +68,7 @@ $reparations_tout = AdminController::ListeReparationsToutClients();
             <th>Actions</th>
         </tr>
         <?php if (sizeof($reparations_tout) == 0) {
-            ?> <tr><td colspan="11">Aucun appareil trouve</td></tr> <?php
+            ?> <tr><td colspan="11">Aucun appareil trouve ¯\_(ツ)_/¯</td></tr> <?php
         } else {
             foreach ($reparations_tout as $appareil) {
                 ?>
@@ -66,9 +80,9 @@ $reparations_tout = AdminController::ListeReparationsToutClients();
                         <td><?php echo $appareil->appareil->modele; ?></td>
                         <td><?php echo $appareil->appareil->numSerie; ?></td>
                         <td><?php echo $appareil->appareil->client->login; ?></td>
-                        <td><?php echo $appareil->dateDepot ?? "Pas confirme"; ?></td>
-                        <td><?php echo $appareil->dateFinPrevue ?? "Pas confirme"; ?></td>
-                        <td><?php echo $appareil->dateFinReelle ?? "Pas confirme"; ?></td>
+                        <td><?php echo $appareil->dateDepot ?? "n/a"; ?></td>
+                        <td><?php echo $appareil->dateFinPrevue ?? "n/a"; ?></td>
+                        <td><?php echo $appareil->dateFinReelle ?? "n/a"; ?></td>
                         <td><?php echo $appareil->panne; ?></td>
                         <td><?php echo $appareil->cout; ?></td>
                         <td><?php echo $appareil->technicien->nom; ?></td>

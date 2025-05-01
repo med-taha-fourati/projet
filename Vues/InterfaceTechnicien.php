@@ -18,9 +18,16 @@ if (!isset($_SESSION['client'])) {
 $client = $_SESSION['client'];
 if (UtilisateurDAO::FetchRoleById($client) < Technicien::$code) {
     include_once '../Connexion/Connection.php';
-    error_403();
+    header('HTTP/1.0 403 Forbidden');
+        $contents = file_get_contents('../Vues/assets/403.html');
+        exit($contents);
 }
-
+if (isset($_GET['filter'])) {
+    $filter = $_GET['filter'];
+    $appareils = array_filter($appareils, function ($appareil) use ($filter) {
+        return stripos($appareil->appareil->marque, $filter) !== false;
+    });
+}
 //NOTE - Client de notre session
 $appareils = ReparationController::ListeReparationsByClient($client); //AppareilController::ListeAppareilsByClient($client);
 $appareils_0 = array_filter($appareils, function ($appareil) {
@@ -69,7 +76,27 @@ $appareils_2 = array_filter($appareils, function ($appareil) {
             </div>
         </div>
     </div>
-    <table class="table table-bs-props table-responsive">
+    <hr>
+    <form action="InterfaceTechnicien.php" method="get">
+        <div class="px-5 row">
+            <div class="col-9">
+                <input type="text" name="filter" class="form-control" value="<?php echo $filter ?? ''; ?>" placeholder="Rechercher par marque">
+            </div>
+            <div class="col-3">
+                <button type="submit" class="btn btn-primary w-100">Rechercher</button>
+            </div>
+        </div>
+    </form>
+    <style>
+        .table-shadow {
+            margin: 1rem 0;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+    </style>
+    <table class="table table-hover table-striped table-responsive table-shadow">
         <tr>
             <th>Type</th>
             <th>Marque</th>
@@ -82,7 +109,7 @@ $appareils_2 = array_filter($appareils, function ($appareil) {
             <th>Actions</th>
         </tr>
         <?php if (sizeof($appareils) == 0) {
-            ?> <tr><td colspan="9">Aucun appareil trouve</td></tr> <?php
+            ?> <tr><td colspan="9">Aucun appareil trouve ¯\_(ツ)_/¯</td></tr> <?php
         } else {
             foreach ($appareils as $appareil) {
                 ?>
@@ -93,8 +120,8 @@ $appareils_2 = array_filter($appareils, function ($appareil) {
                         <td><?php echo $appareil->appareil->marque; ?></td>
                         <td><?php echo $appareil->appareil->modele; ?></td>
                         <td><?php echo $appareil->appareil->numSerie; ?></td>
-                        <td><?php echo $appareil->dateDepot ?? "Pas confirme"; ?></td>
-                        <td><?php echo $appareil->dateFinPrevue ?? "Pas confirme"; ?></td>
+                        <td><?php echo $appareil->dateDepot ?? "n/a"; ?></td>
+                        <td><?php echo $appareil->dateFinPrevue ?? "n/a"; ?></td>
                         <td><?php echo $appareil->panne; ?></td>
                         <td><?php echo $appareil->cout; ?></td>
                         <td>

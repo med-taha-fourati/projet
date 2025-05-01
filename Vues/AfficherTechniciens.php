@@ -19,10 +19,19 @@ if (!isset($_SESSION['client'])) {
 $client = $_SESSION['client'];
 if (UtilisateurDAO::FetchRoleById($client) != Admin::$code) {
     include_once '../Connexion/Connection.php';
-    error_403();
+    header('HTTP/1.0 403 Forbidden');
+        $contents = file_get_contents('../Vues/assets/403.html');
+        exit($contents);
 }
 
 $reparations_tout = UtilisateurController::ListeTechniciens();
+
+if (isset($_GET['filter'])) {
+    $filter = $_GET['filter'];
+    $reparations_tout = array_filter($reparations_tout, function ($technicien) use ($filter) {
+        return stripos($technicien->login, $filter) !== false || stripos($technicien->nom, $filter) !== false;
+    });
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,7 +46,28 @@ $reparations_tout = UtilisateurController::ListeTechniciens();
 <hr>
 <body class="admin_page_container global_coloring">
 <h5><?php echo sizeof($reparations_tout); ?> Techniciens</h5>
-    <table class="table table-bs-props table-responsive">
+<hr>
+<form action="AfficherTechniciens.php" method="get">
+        <div class="px-5 row">
+            <div class="col-9">
+                <input type="text" name="filter" class="form-control" value="<?php echo $filter ?? ''; ?>" placeholder="Rechercher par login">
+            </div>
+            <div class="col-3">
+                <button type="submit" class="btn btn-primary w-100">Rechercher</button>
+            </div>
+        </div>
+    </form>
+    <hr>
+<style>
+        .table-shadow {
+            margin: 1rem 0;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+    </style>
+    <table class="table table-hover table-striped table-responsive table-shadow">
         <tr>
             <th>Login</th>
             <th>Password</th>
@@ -48,7 +78,7 @@ $reparations_tout = UtilisateurController::ListeTechniciens();
             <th>Actions</th>
         </tr>
         <?php if (sizeof($reparations_tout) == 0) {
-            ?> <tr><td colspan="6">Aucun appareil trouve</td></tr> <?php
+            ?> <tr><td colspan="6">Aucun technicien trouve ¯\_(ツ)_/¯</td></tr> <?php
         } else {
             foreach ($reparations_tout as $appareil) {
                 ?>

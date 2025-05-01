@@ -41,12 +41,6 @@
     margin-bottom: 20px;
 }
 
-.seperator {
-    height: 100vh;
-    width: 1px;
-    border: 1px solid #000000;
-}
-
 .navigation_container {
     color: var(--powder-blue);
     background-color: var(--charcoal);
@@ -90,8 +84,7 @@
 
 .table-bs-props {
     --bs-table-bg: transparent !important;
-    
-    --bs-table-border-color: var(--eerie-black) !important;
+    --bs-table-border-color: var(--charcoal) !important;
 }
 
 .primary-btn-bs-props {
@@ -186,4 +179,10 @@
     background-color: var(--btn-success) !important;
     border-color: var(--btn-success) !important;
     color: var(--platinum) !important;
+}
+
+.seperator {
+    height: 100vh;
+    width: 1px;
+    border: 1px solid #000000;
 }

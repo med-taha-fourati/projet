@@ -15,7 +15,9 @@ $client = $_SESSION['client'];
 
 if (UtilisateurDAO::FetchRoleById($client) != Technicien::$code) {
     include_once '../Connexion/Connection.php';
-    error_403();
+    header('HTTP/1.0 403 Forbidden');
+        $contents = file_get_contents('../Vues/assets/403.html');
+        exit($contents);
 }
 
 if (!isset($_GET['id'])) {

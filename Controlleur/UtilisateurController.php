@@ -25,6 +25,15 @@ class UtilisateurController {
         return $reparations_tout;
     }
 
+    public static function ListeUtilisateurs() {
+        $client = UtilisateurDAO::FindAll();
+        $clients = [];
+        foreach ($client as $user) {
+            $clients[] = $user;
+        }
+        return $clients;
+    }
+
     public static function ListeClients() {
         $client = UtilisateurDAO::FindAll();
         $clients = [];

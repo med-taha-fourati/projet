@@ -17,11 +17,13 @@ if (!isset($_SESSION['client'])) {
 $client = $_SESSION['client'];
 if (UtilisateurDAO::FetchRoleById($client) != Admin::$code) {
     include_once '../Connexion/Connection.php';
-    error_403();
+    header('HTTP/1.0 403 Forbidden');
+        $contents = file_get_contents('../Vues/assets/403.html');
+        exit($contents);
 }
 
 //TODO - function that returns only clients in UserController.php
-$clients = UtilisateurController::ListeClients();
+$clients = UtilisateurController::ListeUtilisateurs();
 ?>
 
 <!DOCTYPE html>

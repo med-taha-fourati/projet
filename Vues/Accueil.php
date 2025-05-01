@@ -15,6 +15,13 @@ if (!isset($_SESSION['client'])) {
 }
 $client = $_SESSION['client'];
 $appareils = UtilisateurController::ListeReparationsByClient($client); //AppareilController::ListeAppareilsByClient($client);
+if (isset($_GET['filter'])) {
+    $filter = $_GET['filter'];
+    $appareils = array_filter($appareils, function ($appareil) use ($filter) {
+        return stripos($appareil->appareil->marque, $filter) !== false;
+    });
+}
+
 $appareils_0 = array_filter($appareils, function ($appareil) {
     return $appareil->statut == 0;
 });
@@ -61,7 +68,27 @@ $appareils_2 = array_filter($appareils, function ($appareil) {
             </div>
         </div>
     </div>
-    <table class="table table-bs-props table-responsive">
+    <hr>
+    <form action="Accueil.php" method="get">
+        <div class="px-5 row">
+            <div class="col-9">
+                <input type="text" name="filter" class="form-control" value="<?php echo $filter ?? ''; ?>" placeholder="Rechercher par marque">
+            </div>
+            <div class="col-3">
+                <button type="submit" class="btn btn-primary w-100">Rechercher</button>
+            </div>
+        </div>
+    </form>
+    <style>
+        .table-shadow {
+            margin: 1rem 0;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+    </style>
+    <table class="table table-hover table-striped table-responsive table-shadow">
         <tr>
             <th>Type</th>
             <th>Marque</th>
@@ -75,7 +102,7 @@ $appareils_2 = array_filter($appareils, function ($appareil) {
             <th>Statut</th>
         </tr>
         <?php if (sizeof($appareils) == 0) {
-            ?> <tr><td colspan="10">Aucun reparation trouve</td></tr> <?php
+            ?> <tr><td colspan="10">Aucun reparation trouve ¯\_(ツ)_/¯</td></tr> <?php
         } else {
             foreach ($appareils as $appareil) {
                 ?>
@@ -84,9 +111,9 @@ $appareils_2 = array_filter($appareils, function ($appareil) {
                     <td><?php echo $appareil->appareil->marque; ?></td>
                     <td><?php echo $appareil->appareil->modele; ?></td>
                     <td><?php echo $appareil->appareil->numSerie; ?></td>
-                    <td><?php echo $appareil->dateDepot ?? "Pas confirme"; ?></td>
-                    <td><?php echo $appareil->dateFinPrevue ?? "Pas confirme"; ?></td>
-                    <td><?php echo $appareil->dateFinReelle ?? "Pas confirme"; ?></td>
+                    <td><?php echo $appareil->dateDepot ?? "n/a"; ?></td>
+                    <td><?php echo $appareil->dateFinPrevue ?? "n/a"; ?></td>
+                    <td><?php echo $appareil->dateFinReelle ?? "n/a"; ?></td>
                     <td><?php echo $appareil->panne; ?></td>
                     <td><?php echo $appareil->cout; ?>dt</td>
                     <td><?php switch ($appareil->statut) {
