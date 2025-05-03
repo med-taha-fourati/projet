@@ -12,6 +12,40 @@ require_once '../Controlleur/AdminController.php';
 require_once '../Controlleur/UtilisateurController.php';
 
 session_start();
+
+function filterByItem($appareils) {
+    $filter = $_GET['filter'];
+    $filter_option = $_GET['filter_option'];
+    switch ($filter_option) {
+        case 'login':
+            $appareils = array_filter($appareils, function ($appareil) use ($filter) {
+                return stripos($appareil->login, $filter) !== false;
+        });
+        break;
+    case 'nom':
+            $appareils = array_filter($appareils, function ($appareil) use ($filter) {
+                return stripos($appareil->nom, $filter) !== false;
+        });
+        break;
+        case 'email':
+            $appareils = array_filter($appareils, function ($appareil) use ($filter) {
+                return stripos($appareil->email, $filter) !== false;
+        });
+        break;
+        case 'adresse':
+            $appareils = array_filter($appareils, function ($appareil) use ($filter) {
+                return stripos($appareil->adresse, $filter) !== false;
+        });
+        break;
+        case 'tel':
+            $appareils = array_filter($appareils, function ($appareil) use ($filter) {
+                return stripos($appareil->tel, $filter) !== false;
+        });
+        break;
+    }
+    return $appareils;    
+}
+
 if (!isset($_SESSION['client'])) {
     header('Location: ../Vues/Authentification.php');
     exit();
@@ -28,9 +62,7 @@ $reparations_tout = UtilisateurController::ListeTechniciens();
 
 if (isset($_GET['filter'])) {
     $filter = $_GET['filter'];
-    $reparations_tout = array_filter($reparations_tout, function ($technicien) use ($filter) {
-        return stripos($technicien->login, $filter) !== false || stripos($technicien->nom, $filter) !== false;
-    });
+    $reparations_tout = filterByItem($reparations_tout);
 }
 ?>
 <!DOCTYPE html>
@@ -49,10 +81,19 @@ if (isset($_GET['filter'])) {
 <hr>
 <form action="AfficherTechniciens.php" method="get">
         <div class="px-5 row">
-            <div class="col-9">
-                <input type="text" name="filter" class="form-control" value="<?php echo $filter ?? ''; ?>" placeholder="Rechercher par login">
+            <div class="col-2">
+                <select name="filter_option" id="filter_option" class="form-select w-100">
+                    <option value="login" <?php if (isset($_GET['filter_option']) && $_GET['filter_option'] == "login") echo "selected"; else ''; ?>>Par Login</option>
+                    <option value="nom" <?php if (isset($_GET['filter_option']) && $_GET['filter_option'] == "nom") echo "selected"; else ''; ?>>Par Nom</option>
+                    <option value="email" <?php if (isset($_GET['filter_option']) && $_GET['filter_option'] == "email") echo "selected"; else ''; ?>>Par Email</option>
+                    <option value="adresse" <?php if (isset($_GET['filter_option']) && $_GET['filter_option'] == "adresse") echo "selected"; else ''; ?>>Par Adresse</option>
+                    <option value="tel" <?php if (isset($_GET['filter_option']) && $_GET['filter_option'] == "tel") echo "selected"; else ''; ?>>Par Tel</option>
+                    </select>
             </div>
-            <div class="col-3">
+            <div class="col-8">
+                <input type="text" name="filter" class="form-control w-100" value="<?php echo $filter ?? ''; ?>" placeholder="Rechercher">
+            </div>
+            <div class="col-2">
                 <button type="submit" class="btn btn-primary w-100">Rechercher</button>
             </div>
         </div>

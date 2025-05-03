@@ -11,6 +11,61 @@ require_once '../Metier/Admin.php';
 require_once '../Controlleur/AdminController.php';
 
 session_start();
+
+function filterByItem($appareils) {
+    $filter = $_GET['filter'];
+    $filter_option = $_GET['filter_option'];
+    switch ($filter_option) {
+        case 'type':
+            $appareils = array_filter($appareils, function ($appareil) use ($filter) {
+                return stripos($appareil->appareil->type, $filter) !== false;
+        });
+        break;
+    case 'modele':
+            $appareils = array_filter($appareils, function ($appareil) use ($filter) {
+                return stripos($appareil->appareil->modele, $filter) !== false;
+        });
+        break;
+        case 'marque':
+            $appareils = array_filter($appareils, function ($appareil) use ($filter) {
+                return stripos($appareil->appareil->marque, $filter) !== false;
+    });
+    break;
+    case 'numSerie':
+            $appareils = array_filter($appareils, function ($appareil) use ($filter) {
+                return stripos($appareil->appareil->numSerie, $filter) !== false;
+        });
+        break;
+    case 'statut':
+        switch ($filter) {
+            case 'En attente':
+                $filter_statut = 0;
+                break;
+            case 'En reparation':
+                $filter_statut = 1;
+                break;
+            case 'Termine':
+                $filter_statut = 2;
+                break;
+        }
+            $appareils = array_filter($appareils, function ($appareil) use ($filter_statut) {
+                return stripos($appareil->statut, $filter_statut) !== false;
+        });
+        break;
+    case 'login-client':
+        $appareils = array_filter($appareils, function ($appareil) use ($filter) {
+            return stripos($appareil->appareil->client->login, $filter) !== false;
+        });
+        break;
+    case 'tech-nom':
+        $appareils = array_filter($appareils, function ($appareil) use ($filter) {
+            return stripos($appareil->technicien->nom, $filter) !== false;
+        });
+        break;
+    }
+    return $appareils;    
+}
+
 if (!isset($_SESSION['client'])) {
     header('Location: ../Vues/Authentification.php');
     exit();
@@ -27,9 +82,7 @@ if (UtilisateurDAO::FetchRoleById($client) != Admin::$code) {
 $reparations_tout = AdminController::ListeReparationsToutClients();
 if (isset($_GET['filter'])) {
     $filter = $_GET['filter'];
-    $reparations_tout = array_filter($reparations_tout, function ($appareil) use ($filter) {
-        return stripos($appareil->technicien->login, $filter) !== false || stripos($appareil->technicien->nom, $filter) !== false;
-    });
+    $reparations_tout = filterByItem($reparations_tout);
 }
  //AppareilController::ListeAppareilsByClient($client);
 ?>
@@ -51,10 +104,21 @@ if (isset($_GET['filter'])) {
     <hr>
     <form action="Administration.php" method="get">
         <div class="px-5 row">
-            <div class="col-9">
-                <input type="text" name="filter" class="form-control" value="<?php echo $filter ?? ''; ?>" placeholder="Rechercher par technicien">
+            <div class="col-2">
+                <select name="filter_option" id="filter_option" class="form-select w-100">
+                    <option value="type" <?php if (isset($_GET['filter_option']) && $_GET['filter_option'] == "type") echo "selected"; else ''; ?>>Par Type</option>
+                    <option value="marque" <?php if (isset($_GET['filter_option']) && $_GET['filter_option'] == "marque") echo "selected"; else ''; ?>>Par Marque</option>
+                    <option value="modele" <?php if (isset($_GET['filter_option']) && $_GET['filter_option'] == "modele") echo "selected"; else ''; ?>>Par Modele</option>
+                    <option value="numSerie" <?php if (isset($_GET['filter_option']) && $_GET['filter_option'] == "numSerie") echo "selected"; else ''; ?>>Par Num serie</option>
+                    <option value="statut" <?php if (isset($_GET['filter_option']) && $_GET['filter_option'] == "statut") echo "selected"; else ''; ?>>Par Statut</option>
+                    <option value="login-client" <?php if (isset($_GET['filter_option']) && $_GET['filter_option'] == "login-client") echo "selected"; else ''; ?>>Par Client</option>
+                    <option value="tech-nom" <?php if (isset($_GET['filter_option']) && $_GET['filter_option'] == "tech-nom") echo "selected"; else ''; ?>>Par Technicien</option>
+                </select>
             </div>
-            <div class="col-3">
+            <div class="col-8">
+                <input type="text" name="filter" class="form-control w-100" value="<?php echo $filter ?? ''; ?>" placeholder="Rechercher">
+            </div>
+            <div class="col-2">
                 <button type="submit" class="btn btn-primary w-100">Rechercher</button>
             </div>
         </div>

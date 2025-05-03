@@ -10,12 +10,12 @@ class AppareilDAO {
     public static function AjouterAppareil($type, $marque, $modele, $numSerie, $client) {
         include_once '../Connexion/Connection.php';
 
-        $res = $conn->prepare("INSERT INTO appareil (type, marque, modele, numSerie, client) VALUES (?, ?, ?, ?, ?)");
+        $res = $conn->prepare("INSERT INTO appareil (type, marque, modele, numserie, id_client) VALUES (?, ?, ?, ?, ?)");
         $res->bindParam(1, $type);
         $res->bindParam(2, $marque);
         $res->bindParam(3, $modele);
         $res->bindParam(4, $numSerie);
-        $res->bindParam(5, $client->id);
+        $res->bindParam(5, $client);
         $req = $res->execute();
         if ($req) {
             return $appareil;

@@ -124,10 +124,14 @@ class UtilisateurDAO {
         }
     }
 
-    public static function ModifierUtilisateur($id, $login, $password, $nom, $email, $adresse, $tel) {
-        include_once '../Connexion/Connection.php';
+    public static function ModifierUtilisateur($id, $login, $password, $nom, $email, $adresse, $tel, $role) {
+        $conn = new PDO('mysql:host=localhost;dbname=gestion_reparation', 'root', '');
 
-        $res = $conn->prepare("UPDATE utilisateur SET login = ?, password = ?, nom = ?, email = ?, adresse = ?, tel = ? WHERE id = ?");
+        if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+        }
+        
+        $res = $conn->prepare("UPDATE utilisateur SET login = ?, password = ?, nom = ?, email = ?, adresse = ?, tel = ?, role = ? WHERE id = ?");
         
         $res->bindParam(1, $login);
         $res->bindParam(2, $password);
@@ -135,7 +139,8 @@ class UtilisateurDAO {
         $res->bindParam(4, $email);
         $res->bindParam(5, $adresse);
         $res->bindParam(6, $tel);
-        $res->bindParam(7, $id);
+        $res->bindParam(7, $role);
+        $res->bindParam(8, $id);
 
         if ($res->execute()) {
             return true;

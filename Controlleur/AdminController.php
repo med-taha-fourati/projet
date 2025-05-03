@@ -205,7 +205,8 @@ if (isset($_POST['modifier_technicien_admin'])) {
 
 // ajouter technicien
 if (isset($_POST['ajouter_technicien_admin'])) {
-    if (isset($_POST['exist_select']) && $_POST['exist_select'] == 'existant') {
+    echo $_POST['client'];
+    if (isset($_POST['client'])) {
         $client_id = $_POST['client'];
         $client = UtilisateurDAO::FindById($client_id);
         UtilisateurDAO::ModifierUtilisateur($client->id, 

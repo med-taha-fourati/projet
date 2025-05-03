@@ -42,7 +42,10 @@ $clients = UtilisateurController::ListeUtilisateurs();
         <fieldset>
             <legend>Formulaire de creation</legend>
             <label for="type">Type:</label>
-            <input type="text" name="type" id="type" class="form-control" required>
+            <select name="type" id="type" class="form-select">
+                <option value="PC Portable">PC Portable</option>
+                <option value="PC Bureau">PC Bureau</option>
+            </select>
             <label for="marque">Marque:</label>
             <input type="text" name="marque" id="marque" class="form-control" required>
             <label for="modele">Modèle:</label>

@@ -62,24 +62,24 @@ $clients = UtilisateurController::ListeClients();
         
         <div class="nouveau" style="display: none;">
             <fieldset>
-            <legend>Formulaire de creation</legend>
-            <label for="login">Login:</label>
-            <input type="text" name="login" id="login" class="form-control" required>
-            <label for="password">Password:</label>
-            <input type="password" name="password" id="password" class="form-control" required>
-            <label for="nom">Nom:</label>
-            <input type="text" name="nom" id="nom" class="form-control" required>
-            <label for="email">Email:</label>
-            <input type="email" name="email" id="email" class="form-control">
-            <label for="adresse">Adresse:</label>
-            <input type="text" name="adresse" id="adresse" class="form-control">
-            <label for="tel">Tel:</label>
-            <input type="tel" name="tel" id="tel" class="form-control">
-        </fieldset>
-    </div>
+                <legend>Formulaire de creation</legend>
+                <label for="login">Login:</label>
+                <input type="text" name="login" id="login" class="form-control">
+                <label for="password">Password:</label>
+                <input type="password" name="password" id="password" class="form-control">
+                <label for="nom">Nom:</label>
+                <input type="text" name="nom" id="nom" class="form-control">
+                <label for="email">Email:</label>
+                <input type="email" name="email" id="email" class="form-control">
+                <label for="adresse">Adresse:</label>
+                <input type="text" name="adresse" id="adresse" class="form-control">
+                <label for="tel">Tel:</label>
+                <input type="tel" name="tel" id="tel" class="form-control">
+            </fieldset>
+        </div>
     
-    <hr>
-    <input type="submit" value="Ajouter" name="ajouter_technicien_admin" class="btn btn-primary">
+        <hr>
+        <input type="submit" value="Ajouter" name="ajouter_technicien_admin" class="btn btn-primary">
     </form>
 </body>
 <script>
