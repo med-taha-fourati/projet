@@ -97,8 +97,35 @@ $appareils_2 = array_filter($appareils, function ($appareil) {
     <title>Gestion de reparation des ordinateurs</title>
     <link rel="stylesheet" href="Styles/style.css">
     <link rel="stylesheet" href="Styles/attrib_style.css">
+    <link rel="stylesheet" href="Styles/breadcrumb_style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
 </head>
+<?php 
+if (isset($_GET['status']) && $_GET['status'] == true) {
+    ?>
+    <div class="breadcrumb-success">
+    <span>Operation terminee avec succees</span>
+    <button class="breadcrumb-button" onClick="closeBreakcrumb();">x</button>
+    <script>
+        function closeBreakcrumb() {
+            document.querySelector('.breadcrumb-success').style.display = 'none';
+        }
+    </script>
+</div>
+<?php
+} else if (isset($_GET['status']) && $_GET['status'] == false) {
+    ?>
+    <div class="breadcrumb-failure">
+    <span>Echec ajout</span>
+    <button class="breadcrumb-button" onClick="closeBreakcrumb();">x</button>
+    <script>
+        function closeBreakcrumb() {
+            document.querySelector('.breadcrumb-success').style.display = 'none';
+        }
+    </script>
+    <?php
+}
+?>
 <h1>Liste des appareils a reparer pour technicien <?php echo $_SESSION['login']; ?></h1>
 <hr>
 <body class="admin_page_container global_coloring">

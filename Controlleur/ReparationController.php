@@ -40,7 +40,7 @@ class ReparationController {
                 $reparation_trouvee->statut = 1;
                 $reparation_trouvee->dateDebut = $date;
                 ReparationDAO::ModifierReparation($reparation_trouvee);
-                header('Location: ../Vues/InterfaceTechnicien.php');
+                header('Location: ../Vues/InterfaceTechnicien.php?status=true');
                 exit;
             }
         } catch (Exception $e) {
@@ -140,7 +140,7 @@ if (isset($_POST['fin_rep'])) {
         $reparation->panne = $panne;
         $reparation->statut = 2; // Terminé
         ReparationDAO::ModifierReparation($reparation);
-        header('Location: ../Vues/InterfaceTechnicien.php');
+        header('Location: ../Vues/InterfaceTechnicien.php?status=true');
         exit;
     } else {
         echo "Erreur: Reparation non trouvée.";

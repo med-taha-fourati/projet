@@ -28,7 +28,7 @@ class AdminController {
             $reparation = ReparationDAO::FindByReparationId($reparation_id);
             if ($reparation) {
                 ReparationDAO::SupprimerReparation($reparation_id);
-                header('Location: ../Vues/Administration.php');
+                header('Location: ../Vues/Administration.php?status=true');
                 exit;
             } else {
                 echo "Reparation non trouvée.";
@@ -75,7 +75,7 @@ class AdminController {
                 $reparation->dateFinReelle = $date_fin_reelle;
 
                 if (ReparationDAO::ModifierReparation($reparation)) {
-                    header('Location: ../Vues/Administration.php');
+                    header('Location: ../Vues/Administration.php?status=true');
                 } else {
                     echo "Erreur lors de la modification de la réparation.";
                 }
@@ -98,7 +98,7 @@ if (isset($_POST['action_admin'])) {
     switch ($action) {
         case 'Annuler':
             AdminController::SupprimerReparation($reparation_id);
-            header('Location: ../Vues/Administration.php');
+            header('Location: ../Vues/Administration.php?status=true');
             break;
         case 'Modifier':
             header('Location: ../Vues/ModifierReparationAdmin.php?reparation_id=' . $reparation_id);
@@ -140,7 +140,7 @@ if (isset($_POST['modifier_rep'])) {
                                         $appareil_id,
                                         $technicien_id);
             if ($res) {
-                header('Location: ../Vues/Administration.php');
+                header('Location: ../Vues/Administration.php?status=true');
             } else {
                 echo "Erreur lors de l'ajout de la réparation.";
             }
@@ -156,7 +156,7 @@ if (isset($_POST['modifier_rep'])) {
                                         $date_depot,
                                         $date_fin_prevue,
                                         $date_fin_reelle);
-            header('Location: ../Vues/Administration.php');
+            header('Location: ../Vues/Administration.php?status=true');
             break;
         default:
             echo "Action non reconnue.";
@@ -172,7 +172,7 @@ if (isset($_POST['action_admin_tech'])) {
     switch ($action) {
         case 'Supprimer':
             UtilisateurDAO::SupprimerUtilisateur($technicien_id);
-            header('Location: ../Vues/AfficherTechniciens.php');
+            header('Location: ../Vues/AfficherTechniciens.php?status=true');
             break;
         case 'Modifier':
             header('Location: ../Vues/ModifierTechnicien.php?technicien_id=' . $technicien_id);
@@ -200,7 +200,7 @@ if (isset($_POST['modifier_technicien_admin'])) {
                                         $email, 
                                         $adresse, 
                                         $tel);
-    header('Location: ../Vues/AfficherTechniciens.php');
+    header('Location: ../Vues/AfficherTechniciens.php?status=true');
 }
 
 // ajouter technicien
@@ -217,7 +217,7 @@ if (isset($_POST['ajouter_technicien_admin'])) {
                                             $client->adresse,
                                             $client->tel,
                                             Technicien::$code);
-        header('Location: ../Vues/AfficherTechniciens.php');
+        header('Location: ../Vues/AfficherTechniciens.php?status=true');
     } else {
         $login = $_POST['login'];
         $password = $_POST['password'];
@@ -227,7 +227,7 @@ if (isset($_POST['ajouter_technicien_admin'])) {
         $tel = $_POST['tel'];
 
         UtilisateurDAO::AjouterUtilisateur($login, $password, $nom, $email, $adresse, $tel, Technicien::$code);
-        header('Location: ../Vues/AfficherTechniciens.php');
+        header('Location: ../Vues/AfficherTechniciens.php?status=true');
     }
 }
 
@@ -243,7 +243,7 @@ if (isset($_POST['derank_technicien'])) {
                                         $technicien->adresse,
                                         $technicien->tel,
                                         Client::$code);
-    header('Location: ../Vues/AfficherTechniciens.php');
+    header('Location: ../Vues/AfficherTechniciens.php?status=true');
 }
 
 // controle appareil admin
@@ -254,7 +254,7 @@ if (isset($_POST['action_admin_app'])) {
     switch ($action) {
         case 'Supprimer':
             AppareilDAO::SupprimerAppareil($appareil_id);
-            header('Location: ../Vues/AfficherAppareils.php');
+            header('Location: ../Vues/AfficherAppareils.php?status=true');
             break;
         case 'Modifier':
             header('Location: ../Vues/ModifierAppareil.php?appareil_id=' . $appareil_id);
@@ -275,7 +275,7 @@ if (isset($_POST['modifier_appareil_admin'])) {
     $client_id = $_POST['client'];
 
     AppareilDAO::ModifierAppareil($appareil_id, $type, $marque, $modele, $numSerie, $client_id);
-    header('Location: ../Vues/AfficherAppareils.php');
+    header('Location: ../Vues/AfficherAppareils.php?status=true');
 }
 
 // ajouter appareil
@@ -287,6 +287,6 @@ if (isset($_POST['ajouter_appareil_admin'])) {
     $client_id = $_POST['client'];
 
     AppareilDAO::AjouterAppareil($type, $marque, $modele, $numSerie, $client_id);
-    header('Location: ../Vues/AfficherAppareils.php');
+    header('Location: ../Vues/AfficherAppareils.php?status=true');
 }
 ?>

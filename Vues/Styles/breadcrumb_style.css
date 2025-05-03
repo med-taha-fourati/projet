@@ -1,0 +1,24 @@
+.breadcrumb-success {
+    margin-top: -20px;
+    margin-left: -20px;
+    margin-right: -20px;
+    margin-bottom: 20px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(101, 133, 112, 0.39) !important;
+    border-bottom: var(--btn-success) 1px solid;
+    color: rgb(59, 75, 64) !important;
+    font-size: 1.2em;
+}
+.breadcrumb-button {
+    background-color: transparent;
+    border: none;
+    color: rgb(59, 75, 64) !important;
+    cursor: pointer;
+
+}
+.breadcrumb-button:hover {
+    color: rgb(101, 133, 112) !important;
+}
