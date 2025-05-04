@@ -36,8 +36,33 @@ $appareil = AppareilController::ListeAppareilById($appareil_id);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajouter un technicien</title>
     <link rel="stylesheet" href="./Styles/style.css">
+    <link rel="stylesheet" href="Styles/breadcrumb_style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
 </head>
+<?php
+if (isset($_GET['status']) && $_GET['status'] == "false") {
+    ?>
+    <div class="breadcrumb-failure">
+        <?php
+        switch ($_GET['errcode']) {
+            case 3:
+                echo "<span>Verifier champs vides</span>";
+                break;
+            default:
+                echo "<span>Erreur inconnu</span>";
+                break;
+        }
+        ?>
+    <button class="breadcrumb-button" onClick="closeBreakcrumb();">x</button>
+    <script>
+        function closeBreakcrumb() {
+            document.querySelector('.breadcrumb-failure').style.display = 'none';
+        }
+    </script>
+    </div>
+    <?php
+}
+?>
 <body class="admin_page_container global_coloring">
     <h1>Modifier l'appareil</h1>
     <br><br>

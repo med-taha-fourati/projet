@@ -12,6 +12,22 @@
     color: rgb(59, 75, 64) !important;
     font-size: 1.2em;
 }
+
+.breadcrumb-failure {
+    margin-top: -20px;
+    margin-left: -20px;
+    margin-right: -20px;
+    margin-bottom: 20px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(88, 46, 43, 0.39) !important;
+    border-bottom: var(--btn-success) 1px solid;
+    color:  rgb(90, 55, 53)  !important;
+    font-size: 1.2em;
+}
+
 .breadcrumb-button {
     background-color: transparent;
     border: none;

@@ -127,7 +127,7 @@ if (isset($_POST['modifier_rep'])) {
     $date_depot = ($_POST['date_depot'] != "") ? $_POST['date_depot'] : null;
     $date_fin_prevue = ($_POST['date_fin_pr'] != "") ? $_POST['date_fin_pr'] : null;
     $date_fin_reelle = ($_POST['date_fin_re'] != "") ? $_POST['date_fin_re'] : null;
-
+    
     switch ($_POST['modifier_rep']) {
         case 'Ajouter':
             $res = ReparationController::AjouterReparation(null,
@@ -146,6 +146,21 @@ if (isset($_POST['modifier_rep'])) {
             }
             break;
         case 'Modifier':
+            if (date('Y-m-d', strtotime($date_fin_prevue)) < date('Y-m-d', strtotime($date_depot))) {
+                header('Location: ../Vues/ModifierReparationAdmin.php?reparation_id=' . $reparation_id . '&status=false&errcode=2');
+                return;
+            }
+        
+            if (empty($panne) || empty($cout)) {
+                header('Location: ../Vues/ModifierReparationAdmin.php?reparation_id=' . $reparation_id . '&status=false&errcode=3');
+                return;
+            }
+        
+            if (empty($appareil_id) || empty($technicien_id)) {
+                header('Location: ../Vues/ModifierReparationAdmin.php?reparation_id=' . $reparation_id . '&status=false&errcode=4');
+                return;
+            }
+
             AdminController::ModifierReparation($reparation_id,
                                         $technicien_id,
                                         $client_id,
@@ -193,6 +208,11 @@ if (isset($_POST['modifier_technicien_admin'])) {
     $adresse = $_POST['adresse'];
     $tel = $_POST['tel'];
 
+    if (empty($login) || empty($password) || empty($nom) || empty($email) || empty($adresse) || empty($tel)) {
+        header('Location: ../Vues/ModifierTechnicien.php?technicien_id=' . $technicien_id.'&status=false&errcode=3');
+        exit;
+    }
+
     UtilisateurDAO::ModifierUtilisateur($technicien_id, 
                                         $login, 
                                         $password, 
@@ -206,7 +226,8 @@ if (isset($_POST['modifier_technicien_admin'])) {
 // ajouter technicien
 if (isset($_POST['ajouter_technicien_admin'])) {
     echo $_POST['client'];
-    if (isset($_POST['client'])) {
+    if (isset($_POST['exist_select'])) {
+    if (isset($_POST['client']) && $_POST['exist_select'] == 'existant') {
         $client_id = $_POST['client'];
         $client = UtilisateurDAO::FindById($client_id);
         UtilisateurDAO::ModifierUtilisateur($client->id, 
@@ -226,8 +247,16 @@ if (isset($_POST['ajouter_technicien_admin'])) {
         $adresse = $_POST['adresse'];
         $tel = $_POST['tel'];
 
+        if (empty($login) || empty($password) || empty($nom) || empty($email) || empty($adresse) || empty($tel)) {
+            header('Location: ../Vues/AjouterTechnicien.php?status=false&errcode=3');
+            return;
+        }
+
         UtilisateurDAO::AjouterUtilisateur($login, $password, $nom, $email, $adresse, $tel, Technicien::$code);
         header('Location: ../Vues/AfficherTechniciens.php?status=true');
+    }} else {
+        header('Location: ../Vues/AjouterTechnicien.php?status=false&errcode=6');
+        exit;
     }
 }
 
@@ -274,6 +303,11 @@ if (isset($_POST['modifier_appareil_admin'])) {
     $numSerie = $_POST['numSerie'];
     $client_id = $_POST['client'];
 
+    if (empty($type) || empty($marque) || empty($modele) || empty($numSerie)) {
+        header('Location: ../Vues/ModifierAppareil.php?appareil_id=' . $appareil_id.'&status=false&errcode=3');
+        exit;
+    }
+
     AppareilDAO::ModifierAppareil($appareil_id, $type, $marque, $modele, $numSerie, $client_id);
     header('Location: ../Vues/AfficherAppareils.php?status=true');
 }
@@ -285,6 +319,11 @@ if (isset($_POST['ajouter_appareil_admin'])) {
     $modele = $_POST['modele'];
     $numSerie = $_POST['numSerie'];
     $client_id = $_POST['client'];
+
+    if (empty($type) || empty($marque) || empty($modele) || empty($numSerie)) {
+        header('Location: ../Vues/ModifierAppareil.php?appareil_id=' . $appareil_id.'&status=false&errcode=3');
+        exit;
+    }
 
     AppareilDAO::AjouterAppareil($type, $marque, $modele, $numSerie, $client_id);
     header('Location: ../Vues/AfficherAppareils.php?status=true');

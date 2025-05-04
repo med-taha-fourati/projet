@@ -43,9 +43,41 @@ $clients = UtilisateurController::ListeUtilisateurs();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modifier reparation</title>
+    <link rel="stylesheet" href="Styles/breadcrumb_style.css">
     <link rel="stylesheet" href="./Styles/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
 </head>
+<?php
+if (isset($_GET['status']) && $_GET['status'] == "false") {
+    ?>
+    <div class="breadcrumb-failure">
+        <?php
+        switch ($_GET['errcode']) {
+            case 2:
+                echo "<span>Verifier date fin prevue plus petite que date depot</span>";
+                break;
+            case 3:
+                echo "<span>Verifier champs vides</span>";
+                break;
+            case 4:
+                echo "<span>Appareil et Techniciens invalides</span>";
+                break;
+            default:
+                echo "<span>Erreur inconnu</span>";
+                break;
+        }
+        ?>
+    <button class="breadcrumb-button" onClick="closeBreakcrumb();">x</button>
+    <script>
+        function closeBreakcrumb() {
+            document.querySelector('.breadcrumb-success').style.display = 'none';
+            document.querySelector('.breadcrumb-failure').style.display = 'none';
+        }
+    </script>
+    </div>
+    <?php
+}
+?>
 <body class="admin_page_container global_coloring">
     <h1>Modifier Reparation pour <?php echo $reparation->appareil->marque; ?></h1>
     <form action="../Controlleur/AdminController.php" method="post" class="form">

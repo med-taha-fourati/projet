@@ -72,21 +72,22 @@ class ReparationController {
                                              $statut,
                                              $appareil_id,
                                              $technicien_id) {
+        
 
-        // if ($date_fin_prevue < $date_depot) {
-        //     header('Location: ../Vues/AjouterReparationAdmin.php');
-        //     return;
-        // }
+        if (date('Y-m-d', strtotime($date_fin_prevue)) < date('Y-m-d', strtotime($date_depot))) {
+            header('Location: ../Vues/AjouterReparationAdmin.php?status=false&errcode=2');
+            return;
+        }
 
-        // if (empty($panne) || empty($cout) || empty($statut)) {
-        //     header('Location: ../Vues/AjouterReparationAdmin.php');
-        //     return;
-        // }
+        if (empty($panne) || empty($cout)) {
+            header('Location: ../Vues/AjouterReparationAdmin.php?status=false&errcode=3');
+            return;
+        }
 
-        // if (empty($appareil_id) || empty($technicien_id)) {
-        //     header('Location: ../Vues/AjouterReparationAdmin.php');
-        //     return;
-        // }
+        if (empty($appareil_id) || empty($technicien_id)) {
+            header('Location: ../Vues/AjouterReparationAdmin.php?status=false&errcode=4');
+            return;
+        }
         return ReparationDAO::AjouterReparation($date_debut, 
                                         $date_depot,
                                         $date_fin_prevue,
@@ -132,7 +133,7 @@ if (isset($_POST['fin_rep'])) {
         }
         if ($reparation->statut != 1) {
             echo "Erreur: La réparation n'est pas en cours.";
-            header('Location: ../Vues/FinaliserReparation.php?id=' . $reparation_id);
+            //header('Location: ../Vues/FinaliserReparation.php?id=' . $reparation_id);
             exit;
         }
         $reparation->dateFinReelle = $dateFinReelle;

@@ -33,12 +33,42 @@ $clients = UtilisateurController::ListeClients();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajouter un technicien</title>
     <link rel="stylesheet" href="./Styles/style.css">
+    <link rel="stylesheet" href="Styles/breadcrumb_style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
 </head>
+<?php
+if (isset($_GET['status']) && $_GET['status'] == "false") {
+    ?>
+    <div class="breadcrumb-failure">
+        <?php
+        switch ($_GET['errcode']) {
+            case 3:
+                echo "<span>Verifier champs vides</span>";
+                break;
+            case 6:
+                echo "<span>Veuiller selectionner une option</span>";
+                break;
+            default:
+                echo "<span>Erreur inconnu</span>";
+                break;
+        }
+        ?>
+    <button class="breadcrumb-button" onClick="closeBreakcrumb();">x</button>
+    <script>
+        function closeBreakcrumb() {
+            document.querySelector('.breadcrumb-failure').style.display = 'none';
+        }
+    </script>
+    </div>
+    <?php
+}
+?>
 <body class="admin_page_container global_coloring">
     <h1>Ajouter un nouveau Technicien</h1>
     <fieldset>
         <legend>Mode d'Insertion</legend>
+    
+    <form action="../Controlleur/AdminController.php" method="post">
     <div class="existant_select">
         <!-- <select name="exist_select" id="exist_select" class="form-select">
             <option value="none">-----------------------------</option>
@@ -50,8 +80,8 @@ $clients = UtilisateurController::ListeClients();
     </div>
     </fieldset>
     <br><br>
-    <form action="../Controlleur/AdminController.php" method="post">
         <div class="existant" style="display: none;">
+            <hr>
             <label for="client">Client:</label>
             <select name="client" id="client" class="form-select">
                 <?php foreach ($clients as $client_r) { ?>
@@ -61,6 +91,7 @@ $clients = UtilisateurController::ListeClients();
         </div>
         
         <div class="nouveau" style="display: none;">
+            <hr>
             <fieldset>
                 <legend>Formulaire de creation</legend>
                 <label for="login">Login:</label>
