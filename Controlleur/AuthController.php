@@ -38,7 +38,7 @@ if (isset($_POST['login_btn'])) {
     $password = $_POST['passwordL'];
     echo $login . $password;
     if ($login == "" || $password == "") {
-        echo "Veuillez remplir tous les champs.";
+        header('Location: ../Vues/Authentification.php?status=false?errcode=2');
     }
     try {
         $utilisateurs = UtilisateurDAO::FindAll();
@@ -48,7 +48,7 @@ if (isset($_POST['login_btn'])) {
         }
         $trouve = false;
         foreach ($utilisateurs as $utilisateur) {
-            echo $utilisateur->login . " " . $utilisateur->password;
+            echo $utilisateur->login;
             if ($utilisateur->login == $login && $utilisateur->password == $password) {
                 $trouve = true;
                 session_start();
@@ -70,7 +70,7 @@ if (isset($_POST['login_btn'])) {
             }
         }
         if ($trouve == false) {
-            echo "Identifiants incorrects.";
+            header('Location: ../Vues/Authentification.php?status=false?errcode=3');
         }
     } catch (Exception $e) {
         echo "Error: " . $e->getMessage();

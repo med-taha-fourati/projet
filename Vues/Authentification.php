@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestion de reparation d'ordinateurs</title>
     <link rel="stylesheet" href="./Styles/auth_style.css">
+    <link rel="stylesheet" href="Styles/breadcrumb_style.css">
 </head>
 <body>
     <div class="the-whole-thing">

@@ -75,7 +75,7 @@ if (isset($_GET['filter'])) {
     <link rel="stylesheet" href="Styles/breadcrumb_style.css">
 </head>
 <?php 
-if (isset($_GET['status']) && $_GET['status'] == true) {
+if (isset($_GET['status']) && $_GET['status'] == "true") {
     ?>
     <div class="breadcrumb-success">
     <span>Operation terminee avec succees</span>
@@ -86,20 +86,8 @@ if (isset($_GET['status']) && $_GET['status'] == true) {
         }
     </script>
 </div>
-<?php
-} else if (isset($_GET['status']) && $_GET['status'] == false) {
-    ?>
-    <div class="breadcrumb-failure">
-    <span>Echec ajout</span>
-    <button class="breadcrumb-button" onClick="closeBreakcrumb();">x</button>
-    <script>
-        function closeBreakcrumb() {
-            document.querySelector('.breadcrumb-success').style.display = 'none';
-        }
-    </script>
     <?php
-}
-?>
+} ?>
 
 <h1>Liste des appareils</h1>
 <body class="admin_page_container global_coloring">
