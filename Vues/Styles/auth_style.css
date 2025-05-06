@@ -132,3 +132,7 @@ body {
     justify-content: space-between;
     width: 100%;
 }
+
+.underline-error {
+    border-bottom: 3px solid red;
+}

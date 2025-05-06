@@ -70,7 +70,7 @@ if (isset($_POST['login_btn'])) {
             }
         }
         if ($trouve == false) {
-            header('Location: ../Vues/Authentification.php?status=false?errcode=3');
+            header('Location: ../Vues/Authentification.php?status=false&errcode=3');
         }
     } catch (Exception $e) {
         echo "Error: " . $e->getMessage();

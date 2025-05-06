@@ -18,11 +18,42 @@
             <h1>Login</h1>
             <form action="../Controlleur/AuthController.php" method="post">
                 <label for="login">Login:</label>
-                <input type="text" id="login" name="loginL" required><br><br>
+                <input type="text" id="login" name="loginL" required>
+                <?php
+                if (isset($_GET['status']) 
+                && $_GET['status'] == 'false' 
+                && isset($_GET['errcode'])
+                ) {
+                    switch ($_GET['errcode']) {
+                        case 2:
+                            echo "<p style='color: red;'>Login ou mot de passe vide</p>";
+                            break;
+                        case 3:
+                            echo "<p style='color: red;'>Login ou mot de passe incorrect</p>";
+                            break;
+                    }
+                }
+                 ?>
+                <br><br>
 
                 <label for="password">Password:</label>
-                <input type="password" id="password" name="passwordL" required><br><br>
+                <input type="password" id="password" name="passwordL" required>
+                <?php
+                if (isset($_GET['status']) 
+                && $_GET['status'] == 'false' 
+                && isset($_GET['errcode'])) {
+                    switch ($_GET['errcode']) {
+                        case 2:
+                            echo "<p style='color: red;'>Login ou mot de passe vide</p>";
+                            break;
+                        case 3:
+                            echo "<p style='color: red;'>Login ou mot de passe incorrect</p>";
+                            break;
+                    }
+                }
+                 ?>
 
+<br><br>
                 <input type="submit" name="login_btn" value="Login">
             </form>
             <a href="../Vues/InscriptionUtilisateur.php">Pas de compte?</a>
