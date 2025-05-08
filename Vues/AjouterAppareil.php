@@ -15,7 +15,7 @@ if (!isset($_SESSION['client'])) {
     exit();
 }
 $client = $_SESSION['client'];
-if (UtilisateurDAO::FetchRoleById($client) != Admin::$code) {
+if (!AdminController::VerifierAdmin($client)) {
     include_once '../Connexion/Connection.php';
     header('HTTP/1.0 403 Forbidden');
         $contents = file_get_contents('../Vues/assets/403.html');
@@ -63,7 +63,7 @@ if (isset($_GET['status']) && $_GET['status'] == "false") {
 <body class="admin_page_container global_coloring">
     <h1>Ajouter une nouvelle appareil</h1>
     <hr>
-    <form action="../Controlleur/AdminController.php" method="post">
+    <form action="../Controlleur/AppareilController.php" method="post">
         <fieldset>
             <legend>Formulaire de creation</legend>
             <label for="type">Type:</label>

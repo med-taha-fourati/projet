@@ -11,67 +11,12 @@ require_once '../Metier/Admin.php';
 require_once '../Controlleur/AdminController.php';
 
 session_start();
-
-function filterByItem($appareils) {
-    $filter = $_GET['filter'];
-    $filter_option = $_GET['filter_option'];
-    switch ($filter_option) {
-        case 'type':
-            $appareils = array_filter($appareils, function ($appareil) use ($filter) {
-                return stripos($appareil->appareil->type, $filter) !== false;
-        });
-        break;
-    case 'modele':
-            $appareils = array_filter($appareils, function ($appareil) use ($filter) {
-                return stripos($appareil->appareil->modele, $filter) !== false;
-        });
-        break;
-        case 'marque':
-            $appareils = array_filter($appareils, function ($appareil) use ($filter) {
-                return stripos($appareil->appareil->marque, $filter) !== false;
-    });
-    break;
-    case 'numSerie':
-            $appareils = array_filter($appareils, function ($appareil) use ($filter) {
-                return stripos($appareil->appareil->numSerie, $filter) !== false;
-        });
-        break;
-    case 'statut':
-        switch ($filter) {
-            case 'En attente':
-                $filter_statut = 0;
-                break;
-            case 'En reparation':
-                $filter_statut = 1;
-                break;
-            case 'Termine':
-                $filter_statut = 2;
-                break;
-        }
-            $appareils = array_filter($appareils, function ($appareil) use ($filter_statut) {
-                return stripos($appareil->statut, $filter_statut) !== false;
-        });
-        break;
-    case 'login-client':
-        $appareils = array_filter($appareils, function ($appareil) use ($filter) {
-            return stripos($appareil->appareil->client->login, $filter) !== false;
-        });
-        break;
-    case 'tech-nom':
-        $appareils = array_filter($appareils, function ($appareil) use ($filter) {
-            return stripos($appareil->technicien->nom, $filter) !== false;
-        });
-        break;
-    }
-    return $appareils;    
-}
-
 if (!isset($_SESSION['client'])) {
     header('Location: ../Vues/Authentification.php');
     exit();
 }
 $client = $_SESSION['client'];
-if (UtilisateurDAO::FetchRoleById($client) != Admin::$code) {
+if (!AdminController::VerifierAdmin($client)) {
     include_once '../Connexion/Connection.php';
     header('HTTP/1.0 403 Forbidden');
         $contents = file_get_contents('../Vues/assets/403.html');
@@ -79,11 +24,21 @@ if (UtilisateurDAO::FetchRoleById($client) != Admin::$code) {
 }
 
 //TODO - a ajouter dans AdminController.php
-$reparations_tout = AdminController::ListeReparationsToutClients();
+$reparations_tout = ReparationController::ListeReparationsToutClients();
 if (isset($_GET['filter'])) {
     $filter = $_GET['filter'];
-    $reparations_tout = filterByItem($reparations_tout);
+    $reparations_tout = AdminController::filterByItem($reparations_tout, $filter, $_GET['filter_option']);
 }
+
+$appareils_0 = array_filter($reparations_tout, function ($appareil) {
+    return $appareil->statut == 0;
+});
+$appareils_1 = array_filter($reparations_tout, function ($appareil) {
+    return $appareil->statut == 1;
+});
+$appareils_2 = array_filter($reparations_tout, function ($appareil) {
+    return $appareil->statut == 2;
+});
  //AppareilController::ListeAppareilsByClient($client);
 ?>
 <!DOCTYPE html>
@@ -94,6 +49,7 @@ if (isset($_GET['filter'])) {
     <title>Gestion de reparation des ordinateurs</title>
     <link rel="stylesheet" href="./Styles/style.css">
     <link rel="stylesheet" href="Styles/breadcrumb_style.css">
+    <link rel="stylesheet" href="Styles/attrib_style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
 </head>
 <!-- style="text-align: center;" => debatable -->
@@ -128,6 +84,26 @@ if (isset($_GET['status']) && $_GET['status'] == true) {
     <hr>
     <h5><?php echo sizeof($reparations_tout); ?> reparations totales
     </h5>
+    <div class="row">
+        <div class="col">
+            <div class="attrib-box">
+                <div class="attrib-number n0"><?php echo sizeof($appareils_0); ?></div> 
+                <p>En attente</p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="attrib-box">
+                <div class="attrib-number n1"><?php echo sizeof($appareils_1); ?></div> 
+                <p>En reparation</p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="attrib-box">
+                <div class="attrib-number n2"><?php echo sizeof($appareils_2); ?></div> 
+                <p>Termine</p>
+            </div>
+        </div>
+    </div>
     <hr>
     <form action="Administration.php" method="get">
         <div class="px-5 row">
@@ -172,6 +148,7 @@ if (isset($_GET['status']) && $_GET['status'] == true) {
             <th>Panne</th>
             <th>Cout</th>
             <th>Nom du technicien</th>
+            <th>Statut</th>
             <th>Actions</th>
         </tr>
         <?php if (sizeof($reparations_tout) == 0) {
@@ -193,6 +170,17 @@ if (isset($_GET['status']) && $_GET['status'] == true) {
                         <td><?php echo $appareil->panne; ?></td>
                         <td><?php echo $appareil->cout; ?></td>
                         <td><?php echo $appareil->technicien->nom; ?></td>
+                        <td><?php switch ($appareil->statut) {
+                        case 0:
+                            echo "<span style='color:var(--btn-danger);'>En attente</span>";
+                            break;
+                        case 1:
+                            echo "<span style='color:var(--btn-warning);'>En reparation</span>";
+                            break;
+                        case 2:
+                            echo "<span style='color:var(--btn-success);'>Terminé</span>";
+                            break;
+                    } ?></td>
                         <td>
                             <input type="submit" class="btn btn-outline-danger" name="action_admin" value="Annuler"> <!-- supprimer -->
                             <input type="submit" class="btn btn-outline-primary" name="action_admin" value="Modifier">

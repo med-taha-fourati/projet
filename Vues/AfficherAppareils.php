@@ -13,45 +13,12 @@ require_once '../Controlleur/AppareilController.php';
 
 session_start();
 
-function filterByItem($appareils) {
-    $filter = $_GET['filter'];
-    $filter_option = $_GET['filter_option'];
-    switch ($filter_option) {
-        case 'type':
-            $appareils = array_filter($appareils, function ($appareil) use ($filter) {
-                return stripos($appareil->type, $filter) !== false;
-        });
-        break;
-    case 'modele':
-            $appareils = array_filter($appareils, function ($appareil) use ($filter) {
-                return stripos($appareil->modele, $filter) !== false;
-        });
-        break;
-        case 'marque':
-            $appareils = array_filter($appareils, function ($appareil) use ($filter) {
-                return stripos($appareil->marque, $filter) !== false;
-    });
-    break;
-    case 'numSerie':
-            $appareils = array_filter($appareils, function ($appareil) use ($filter) {
-                return stripos($appareil->numSerie, $filter) !== false;
-        });
-        break;
-    case 'login-client':
-        $appareils = array_filter($appareils, function ($appareil) use ($filter) {
-            return stripos($appareil->client->login, $filter) !== false;
-        });
-        break;
-    }
-    return $appareils;    
-}
-
 if (!isset($_SESSION['client'])) {
     header('Location: ../Vues/Authentification.php');
     exit();
 }
 $client = $_SESSION['client'];
-if (UtilisateurDAO::FetchRoleById($client) != Admin::$code) {
+if (!AdminController::VerifierAdmin($client)) {
     include_once '../Connexion/Connection.php';
     header('HTTP/1.0 403 Forbidden');
         $contents = file_get_contents('../Vues/assets/403.html');
@@ -61,7 +28,7 @@ if (UtilisateurDAO::FetchRoleById($client) != Admin::$code) {
 $reparations_tout = AppareilController::ListeToutesAppareils();
 if (isset($_GET['filter'])) {
     $filter = $_GET['filter'];
-    $reparations_tout = filterByItem($reparations_tout);
+    $reparations_tout = AppareilController::filterByItem($reparations_tout, $_GET['filter'], $_GET['filter_option']);
 }
 ?>
 <!DOCTYPE html>

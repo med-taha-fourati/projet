@@ -4,6 +4,7 @@ require_once '../Metier/Utilisateur.php';
 require_once '../DAO/UtilisateurDAO.php';
 require_once '../Metier/Technicien.php';
 require_once '../DAO/ReparationDAO.php';
+require_once '../Controlleur/UtilisateurController.php';
 
 //NOTE - Verifications pour securite
 session_start();
@@ -13,7 +14,7 @@ if (!isset($_SESSION['client'])) {
 }
 $client = $_SESSION['client'];
 
-if (UtilisateurDAO::FetchRoleById($client) != Technicien::$code) {
+if (!UtilisateurController::VerifierTechnicien($client)) {
     include_once '../Connexion/Connection.php';
     header('HTTP/1.0 403 Forbidden');
         $contents = file_get_contents('../Vues/assets/403.html');

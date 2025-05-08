@@ -15,7 +15,7 @@ if (!isset($_SESSION['client'])) {
     exit();
 }
 $client = $_SESSION['client'];
-if (UtilisateurDAO::FetchRoleById($client) != Admin::$code) {
+if (!AdminController::VerifierAdmin($client)) {
     header('HTTP/1.0 403 Forbidden');
         $contents = file_get_contents('../Vues/assets/403.html');
         exit($contents);
@@ -67,7 +67,7 @@ if (isset($_GET['status']) && $_GET['status'] == "false") {
     <h1>Modifier Technicien</h1>
     <fieldset>
         <legend>Retrogarder le technicien</legend>
-        <form action="../Controlleur/AdminController.php" method="post">
+        <form action="../Controlleur/UtilisateurController.php" method="post">
             <input type="hidden" name="technicien_id" value="<?php echo $technicien->id; ?>">
             <input type="submit" value="Rétrograder le technicien en client" name="derank_technicien" class="btn btn-warning">
         </form>

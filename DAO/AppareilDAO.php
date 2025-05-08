@@ -50,14 +50,14 @@ class AppareilDAO {
         $res->bindParam(1, $id);
         $res->execute();
         $row = $res->fetchAll();
-
-        $client = UtilisateurDAO::FindById($row[0]['id_client']);
         
         if (!$row) {
             throw new Exception("Appareil non trouvé");
             //FIXME - 
             // this should be handled in the controller and instead return null instead of throwing an exception;
         }
+
+        $client = UtilisateurDAO::FindById($row[0]['id_client']);
 
         return new Appareil($row[0]['id'], $row[0]['type'], $row[0]['marque'], $row[0]['modele'], $row[0]['numserie'], $client);
     }

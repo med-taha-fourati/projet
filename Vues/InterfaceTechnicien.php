@@ -9,63 +9,15 @@ require_once '../Metier/Appareil.php';
 require_once '../Metier/Reparation.php';
 require_once '../Metier/Technicien.php';
 require_once '../Controlleur/ReparationController.php';
+require_once '../Controlleur/UtilisateurController.php';
 
 session_start();
-function filterByItem($appareils) {
-    $filter = $_GET['filter'];
-    if (!isset($_GET['filter_option'])) {
-        return $appareils;
-    }
-    if (empty($filter)) {
-        return $appareils;
-    }
-    $filter_option = $_GET['filter_option'];
-    switch ($filter_option) {
-        case 'type':
-            $appareils = array_filter($appareils, function ($appareil) use ($filter) {
-                return stripos($appareil->appareil->type, $filter) !== false;
-        });
-        break;
-    case 'modele':
-            $appareils = array_filter($appareils, function ($appareil) use ($filter) {
-                return stripos($appareil->appareil->modele, $filter) !== false;
-        });
-        break;
-        case 'marque':
-                $appareils = array_filter($appareils, function ($appareil) use ($filter) {
-                    return stripos($appareil->appareil->marque, $filter) !== false;
-        });
-        break;
-    case 'numSerie':
-            $appareils = array_filter($appareils, function ($appareil) use ($filter) {
-                return stripos($appareil->appareil->numSerie, $filter) !== false;
-        });
-        break;
-    case 'statut':
-        switch ($filter) {
-            case 'En attente':
-                $filter_statut = 0;
-                break;
-            case 'En reparation':
-                $filter_statut = 1;
-                break;
-            case 'Termine':
-                $filter_statut = 2;
-                break;
-            }
-            $appareils = array_filter($appareils, function ($appareil) use ($filter_statut) {
-                return stripos($appareil->statut, $filter_statut) !== false;
-            });
-        break;
-    }
-    return $appareils;    
-}
 if (!isset($_SESSION['client'])) {
     header('Location: ../Vues/Authentification.php');
     exit();
 }
 $client = $_SESSION['client'];
-if (UtilisateurDAO::FetchRoleById($client) < Technicien::$code) {
+if (!UtilisateurController::VerifierTechnicien($client)) {
     include_once '../Connexion/Connection.php';
     header('HTTP/1.0 403 Forbidden');
         $contents = file_get_contents('../Vues/assets/403.html');
@@ -75,7 +27,7 @@ if (UtilisateurDAO::FetchRoleById($client) < Technicien::$code) {
 $appareils = ReparationController::ListeReparationsByClient($client); //AppareilController::ListeAppareilsByClient($client);
 if (isset($_GET['filter'])) {
     $filter = $_GET['filter'];
-    $appareils = filterByItem($appareils);
+    $appareils = ReparationController::filterByItem($appareils, $filter, $_GET['filter_option']);
 }
 
 $appareils_0 = array_filter($appareils, function ($appareil) {

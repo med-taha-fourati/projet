@@ -13,45 +13,12 @@ require_once '../Controlleur/UtilisateurController.php';
 
 session_start();
 
-function filterByItem($appareils) {
-    $filter = $_GET['filter'];
-    $filter_option = $_GET['filter_option'];
-    switch ($filter_option) {
-        case 'login':
-            $appareils = array_filter($appareils, function ($appareil) use ($filter) {
-                return stripos($appareil->login, $filter) !== false;
-        });
-        break;
-    case 'nom':
-            $appareils = array_filter($appareils, function ($appareil) use ($filter) {
-                return stripos($appareil->nom, $filter) !== false;
-        });
-        break;
-        case 'email':
-            $appareils = array_filter($appareils, function ($appareil) use ($filter) {
-                return stripos($appareil->email, $filter) !== false;
-        });
-        break;
-        case 'adresse':
-            $appareils = array_filter($appareils, function ($appareil) use ($filter) {
-                return stripos($appareil->adresse, $filter) !== false;
-        });
-        break;
-        case 'tel':
-            $appareils = array_filter($appareils, function ($appareil) use ($filter) {
-                return stripos($appareil->tel, $filter) !== false;
-        });
-        break;
-    }
-    return $appareils;    
-}
-
 if (!isset($_SESSION['client'])) {
     header('Location: ../Vues/Authentification.php');
     exit();
 }
 $client = $_SESSION['client'];
-if (UtilisateurDAO::FetchRoleById($client) != Admin::$code) {
+if (!AdminController::VerifierAdmin($client)) {
     include_once '../Connexion/Connection.php';
     header('HTTP/1.0 403 Forbidden');
         $contents = file_get_contents('../Vues/assets/403.html');
@@ -62,7 +29,7 @@ $reparations_tout = UtilisateurController::ListeTechniciens();
 
 if (isset($_GET['filter'])) {
     $filter = $_GET['filter'];
-    $reparations_tout = filterByItem($reparations_tout);
+    $reparations_tout = UtilisateurController::filterByItem($reparations_tout, $filter, $_GET['filter_option']);
 }
 ?>
 <!DOCTYPE html>

@@ -15,7 +15,7 @@ if (!isset($_SESSION['client'])) {
     exit();
 }
 $client = $_SESSION['client'];
-if (UtilisateurDAO::FetchRoleById($client) != Admin::$code) {
+if (!AdminController::VerifierAdmin($client)) {
     include_once '../Connexion/Connection.php';
     header('HTTP/1.0 403 Forbidden');
         $contents = file_get_contents('../Vues/assets/403.html');
@@ -48,6 +48,9 @@ if (isset($_GET['status']) && $_GET['status'] == "false") {
             case 3:
                 echo "<span>Verifier champs vides</span>";
                 break;
+            case 5:
+                echo "<span>Erreur type appareil: types valides sont \"PC Bureau\" et \"PC Portable\"</span>";
+                break;
             default:
                 echo "<span>Erreur inconnu</span>";
                 break;
@@ -66,12 +69,15 @@ if (isset($_GET['status']) && $_GET['status'] == "false") {
 <body class="admin_page_container global_coloring">
     <h1>Modifier l'appareil</h1>
     <br><br>
-    <form action="../Controlleur/AdminController.php" method="post">
+    <form action="../Controlleur/AppareilController.php" method="post">
         <input type="hidden" name="appareil_id" value="<?php echo $appareil->id; ?>">
         <fieldset>
             <legend>Formulaire de modification</legend>
             <label for="type">Type:</label>
-            <input type="text" name="type" id="type" class="form-control" value="<?php echo $appareil->type ?>" required>
+            <select name="type" id="type" class="form-select">
+                <option value="PC Portable" <?php if ($appareil->type == "PC Portable") echo "selected"; ?>>PC Portable</option>
+                <option value="PC Bureau" <?php if ($appareil->type == "PC Bureau") echo "selected"; ?>>PC Bureau</option>
+            </select>
             <label for="marque">Marque:</label>
             <input type="text" name="marque" id="marque" class="form-control" value="<?php echo $appareil->marque ?>" required>
             <label for="modele">Modèle:</label>
