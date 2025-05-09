@@ -87,7 +87,7 @@ if (isset($_POST['action_admin'])) {
 
     switch ($action) {
         case 'Annuler':
-            AdminController::SupprimerReparation($reparation_id);
+            ReparationController::SupprimerReparation($reparation_id);
             header('Location: ../Vues/Administration.php?status=true');
             break;
         case 'Modifier':

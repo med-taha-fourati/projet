@@ -9,6 +9,8 @@ require_once '../DAO/ReparationDAO.php';
 require_once '../DAO/UtilisateurDAO.php';
 require_once '../Metier/Admin.php';
 require_once '../Controlleur/AppareilController.php';
+require_once '../Controlleur/UtilisateurController.php';
+require_once '../Controlleur/AdminController.php';
 
 if (!isset($_SESSION['client'])) {
     header('Location: ../Vues/Authentification.php');
