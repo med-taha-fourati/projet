@@ -335,13 +335,17 @@ if (isset($_POST['fin_rep'])) {
     $reparation = ReparationDAO::FindByReparationId($reparation_id);
     if ($reparation) {
         // checks
+        if (empty($cout) || empty($panne)) {
+            header('Location: ../Vues/FinaliserReparation.php?id=' . $reparation_id . '&status=false&errcode=3');
+            exit;
+        }
         if ($dateFinReelle < $reparation->dateDebut) {
             header('Location: ../Vues/FinaliserReparation.php?id=' . $reparation_id . '&status=false&errcode=5');
             exit;
         }
         if ($reparation->statut != 1) {
             echo "Erreur: La réparation n'est pas en cours.";
-            //header('Location: ../Vues/FinaliserReparation.php?id=' . $reparation_id);
+            header('Location: ../Vues/FinaliserReparation.php?id=' . $reparation_id . '&status=false&errcode=4');
             exit;
         }
         $reparation->dateFinReelle = $dateFinReelle;

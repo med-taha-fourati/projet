@@ -47,6 +47,36 @@ if ($reparation->statut != 1) {
     <link rel="stylesheet" href="./Styles/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
 </head>
+<?php
+if (isset($_GET['status']) && $_GET['status'] == "false") {
+    ?>
+    <div class="breadcrumb-failure">
+        <?php
+        switch ($_GET['errcode']) {
+            case 5:
+                echo "<span>Date fin reelle ne doit pas etre inferieur au date debut</span>";
+                break;
+            case 4:
+                echo "<span>Erreur: La réparation n'est pas en cours.</span>";
+                break;
+            case 3:
+                echo "<span>Verifier champs vides</span>";
+                break;
+            default:
+                echo "<span>Erreur inconnu</span>";
+                break;
+        }
+        ?>
+    <button class="breadcrumb-button" onClick="closeBreakcrumb();">x</button>
+    <script>
+        function closeBreakcrumb() {
+            document.querySelector('.breadcrumb-failure').style.display = 'none';
+        }
+    </script>
+    </div>
+    <?php
+}
+?>
 <body class="admin_page_container global_coloring">
     <h1>Finaliser la reparation pour <?php echo $reparation->appareil->marque; ?></h1>
     <form action="../Controlleur/ReparationController.php" method="post">
